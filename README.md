@@ -30,18 +30,18 @@ A sustainable fashion e-commerce platform connecting Gen Z with thrift stores an
 
 ### Login Page
 
-![Login Page](login.png)
+![Login Page](docs/login.png)
 
 ### Home Page  
 
-![Home Page 1](home1.png)
+![Home Page 1](docs/home1.png)
 
-![Home Page 2](home2.png)
+![Home Page 2](docs/home2.png)
 
 ### Product Catalog
 
-![Categories](categories.png)
+![Categories](docs/categories.png)
 
 ### Shopping Cart
 
-![Shopping Cart](cart.png)
+![Shopping Cart](docs/cart.png)
