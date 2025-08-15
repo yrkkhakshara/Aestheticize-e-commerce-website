@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Wishlist - Aestheticize</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!--header -->
+    <section>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light py-3" aria-label="Eleventh navbar example">
+            <div class="container">
+                <a href="index.html"><img class="logo-mode ml-5" src="./images/logofinal.jpeg"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Help/FAQ</a>
+                        </li>
+                        <li class="nav-item nav-icon" id="cartIcon">
+                            <button class="btn position-relative" onclick="window.location.href='cart.html'">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+                                </svg>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount">0</span>
+                            </button>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <button class="btn dropdown-toggle nav-icon" type="button" id="userDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                            </button>
+                            <ul class="dropdown-menu" id="userDropdown">
+                                <!-- Dropdown items will be populated by JavaScript -->
+                            </ul>
+                        </li>
+                        <li class="nav-item nav-icon">
+                            <a href="wishlist.html" class="btn">
+                                <i class="fas fa-heart text-danger"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </section>
+
+    <!-- Wishlist Content -->
+    <div class="container mt-5 pt-3">
+        <div class="row">
+            <div class="col-12">                
+                <!-- Wishlist Items Container -->
+                <div id="wishlistContainer">
+                    <!-- Saved Items Section -->
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">
+                                <i class="fas fa-heart me-2 text-danger"></i>
+                                Saved Items
+                            </h5>
+                        </div>
+                        <div class="card-body" id="wishlistItems">
+                            <!-- Wishlist items will be dynamically loaded here -->
+                            <div class="text-center py-5" id="emptyWishlistMessage">
+                                <i class="fas fa-heart fs-1 text-muted mb-3"></i>
+                                <h4 class="text-muted">Your wishlist is empty</h4>
+                                <p class="text-muted mb-4">Save items that catch your eye and come back to them later.</p>
+                                <a href="index.html" class="btn btn-primary">
+                                    <i class="fas fa-shopping-bag me-2"></i>
+                                    Browse Products
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/cart-integration.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Wishlist specific functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('=== WISHLIST PAGE LOADED ===');
+            loadWishlistItems();
+            populateUserDropdown();
+        });
+
+        function populateUserDropdown() {
+            const userDropdown = document.getElementById('userDropdown');
+            if (userDropdown) {
+                userDropdown.innerHTML = `
+                    <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i>Profile</a></li>
+                    <li><a class="dropdown-item" href="orders.html"><i class="fas fa-shopping-bag me-2"></i>Orders</a></li>
+                    <li><a class="dropdown-item" href="wishlist.html"><i class="fas fa-heart me-2"></i>Wishlist</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                `;
+            }
+        }
+
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('cart');
+            localStorage.removeItem('wishlist');
+            showNotification('Logged out successfully!', 'success');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1000);
+        }
+
+        function loadWishlistItems() {
+            console.log('Loading wishlist items...');
+            const wishlistItems = document.getElementById('wishlistItems');
+            const emptyMessage = document.getElementById('emptyWishlistMessage');
+            const savedWishlist = localStorage.getItem('wishlist');
+            
+            console.log('localStorage wishlist data:', savedWishlist);
+            
+            if (!savedWishlist || JSON.parse(savedWishlist).length === 0) {
+                console.log('Wishlist is empty, showing empty state');
+                emptyMessage.style.display = 'block';
+                return;
+            }
+            
+            const wishlist = JSON.parse(savedWishlist);
+            console.log('Parsed wishlist:', wishlist);
+            
+            // Hide empty message
+            emptyMessage.style.display = 'none';
+            
+            // Generate wishlist items HTML
+            wishlistItems.innerHTML = wishlist.map(item => `
+                <div class="wishlist-item mb-4 p-3 border rounded" data-item-id="${item.id}">
+                    <div class="row align-items-center">
+                        <!-- Product Image -->
+                        <div class="col-md-3 col-sm-4">
+                            <img src="${item.image}" alt="${item.name}" class="img-fluid rounded" style="max-height: 120px; width: 100%; object-fit: cover;">
+                        </div>
+                        
+                        <!-- Product Details -->
+                        <div class="col-md-6 col-sm-8">
+                            <h5 class="mb-2 fw-bold">${item.name}</h5>
+                            <p class="text-muted mb-2">
+                                <i class="fas fa-tag me-1"></i>
+                                <strong>Category:</strong> ${item.category}
+                            </p>
+                            <div class="mb-2">
+                                <strong>Sustainability Rating:</strong>
+                                <div class="d-inline-block ms-2">
+                                    ${item.sustainability ? Array(item.sustainability).fill('<i class="fas fa-leaf text-success"></i>').join(' ') : '<span class="text-muted">No rating</span>'}
+                                </div>
+                            </div>
+                            <h4 class="text-primary fw-bold mb-0">₹${item.price}</h4>
+                        </div>
+                        
+                        <!-- Action Buttons -->
+                        <div class="col-md-3 col-12">
+                            <div class="d-flex flex-column gap-2">
+                                <button class="btn btn-primary btn-sm" onclick="moveToCart('${item.id}')">
+                                    <i class="fas fa-shopping-cart me-1"></i>
+                                    Add to Cart
+                                </button>
+                                <button class="btn btn-outline-danger btn-sm" onclick="removeFromWishlist('${item.id}')">
+                                    <i class="fas fa-trash me-1"></i>
+                                    Remove
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            console.log(`Loaded ${wishlist.length} wishlist items`);
+        }
+
+        // Move item from wishlist to cart
+        function moveToCart(itemId) {
+            console.log('Moving item to cart:', itemId);
+            const savedWishlist = localStorage.getItem('wishlist');
+            if (!savedWishlist) return;
+            
+            const wishlist = JSON.parse(savedWishlist);
+            const item = wishlist.find(item => item.id === itemId);
+            
+            if (item) {
+                // Add to cart
+                addToCart(item.id, item.name, `₹${item.price}`, item.image, item.category, item.sustainability);
+                
+                // Remove from wishlist
+                removeFromWishlist(itemId);
+                
+                // Show success message
+                showNotification(`${item.name} moved to cart!`, 'success');
+            }
+        }
+
+        // Remove item from wishlist
+        function removeFromWishlist(itemId) {
+            console.log('Removing item from wishlist:', itemId);
+            const savedWishlist = localStorage.getItem('wishlist');
+            if (!savedWishlist) return;
+            
+            let wishlist = JSON.parse(savedWishlist);
+            const itemIndex = wishlist.findIndex(item => item.id === itemId);
+            
+            if (itemIndex > -1) {
+                const removedItem = wishlist[itemIndex];
+                wishlist.splice(itemIndex, 1);
+                
+                // Save updated wishlist
+                localStorage.setItem('wishlist', JSON.stringify(wishlist));
+                
+                // Reload the page to update display
+                loadWishlistItems();
+                
+                // Show success message
+                showNotification(`${removedItem.name} removed from wishlist!`, 'info');
+                
+                console.log('Item removed successfully');
+            }
+        }
+
+        // Show notification function
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'info'} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

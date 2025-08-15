@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Aestheticize</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        .cart-item {
+            border: 1px solid #e0e0e0;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 15px;
+            transition: all 0.3s ease;
+        }
+        .cart-item:hover {
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+        .cart-summary {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 15px;
+            padding: 25px;
+            position: sticky;
+            top: 20px;
+        }
+        .quantity-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .quantity-btn {
+            background: #667eea;
+            color: white;
+            border: none;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .quantity-btn:hover {
+            background: #764ba2;
+            transform: scale(1.1);
+        }
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .remove-btn:hover {
+            background: #c82333;
+            transform: scale(1.05);
+        }
+        .checkout-btn {
+            background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            color: white;
+            font-weight: bold;
+            width: 100%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(40, 167, 69, 0.4);
+        }
+        .empty-cart {
+            text-align: center;
+            padding: 50px 20px;
+        }
+        .empty-cart i {
+            font-size: 80px;
+            color: #ccc;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+    <!--header -->
+    <section>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light py-3" aria-label="Eleventh navbar example">
+            <div class="container">
+                <a href="index.html"><img class="logo-mode ml-5" src="./images/logofinal.jpeg"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Help/FAQ</a>
+                        </li>
+                        <li class="nav-item nav-icon" id="cartIcon">
+                            <button class="btn position-relative" onclick="window.location.href='cart.html'">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+                                </svg>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount">0</span>
+                            </button>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <button class="btn dropdown-toggle nav-icon" type="button" id="userDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                            </button>
+                            <ul class="dropdown-menu" id="userDropdown">
+                                <!-- Dropdown items will be populated by JavaScript -->
+                            </ul>
+                        </li>
+                        <li class="nav-item nav-icon">
+                            <a href="wishlist.html" class="btn">
+                                <i class="fas fa-heart text-danger"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </section>
+
+    <!-- Cart Content -->
+    <div class="container mt-4">
+        <h2 class="mb-4">
+            <i class="fas fa-shopping-cart me-2"></i>
+            Your Shopping Cart
+        </h2>
+
+        <div class="row">
+            <div class="col-lg-8">
+                <div id="cartItems">
+                    <!-- Cart items will be loaded here -->
+                    <div class="empty-cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <h3>Your cart is empty</h3>
+                        <p class="text-muted">Looks like you haven't added any items to your cart yet.</p>
+                        <a href="index.html" class="btn btn-primary btn-lg">
+                            <i class="fas fa-shopping-bag me-2"></i>Continue Shopping
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="cart-summary" id="cartSummary">
+                    <h4><i class="fas fa-receipt me-2"></i>Order Summary</h4>
+                    <hr class="text-light">
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Subtotal:</span>
+                        <span id="subtotal">₹0</span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Shipping:</span>
+                        <span id="shipping">Free</span>
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mb-2">
+                        <span>Tax:</span>
+                        <span id="tax">₹0</span>
+                    </div>
+                    
+                    <hr class="text-light">
+                    
+                    <div class="d-flex justify-content-between mb-3">
+                        <strong>Total:</strong>
+                        <strong id="total">₹0</strong>
+                    </div>
+                    
+                    <button class="checkout-btn" onclick="alert('Checkout functionality coming soon!')">
+                        <i class="fas fa-lock me-2"></i>
+                        Proceed to Checkout
+                    </button>
+                    
+                    <div class="mt-3 text-center">
+                        <small><i class="fas fa-shield-alt me-1"></i>Secure Checkout</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/cart-integration.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/auth.js"></script>
+    <script src="js/profile.js"></script>
+    
+    <script>
+        // Cart page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Cart page loaded');
+            // Initialize user dropdown
+            updateCartUserInterface();
+            // Initialize cart functionality
+            if (typeof refreshCart === 'function') {
+                refreshCart();
+            }
+        });
+        
+        // Initialize user interface for cart page
+        function updateCartUserInterface() {
+            const userDropdown = document.getElementById('userDropdown');
+            
+            if (userDropdown) {
+                const dropdownHTML = `
+                    <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i>Profile</a></li>
+                    <li><a class="dropdown-item" href="orders.html"><i class="fas fa-box me-2"></i>Orders</a></li>
+                    <li><a class="dropdown-item" href="wishlist.html"><i class="fas fa-heart me-2"></i>Wishlist</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                `;
+                userDropdown.innerHTML = dropdownHTML;
+            }
+            
+            // Update cart count
+            const cartCount = document.getElementById('cartCount');
+            if (cartCount) {
+                const savedCart = localStorage.getItem('cart');
+                if (savedCart) {
+                    const cart = JSON.parse(savedCart);
+                    const totalItems = cart.items ? cart.items.reduce((total, item) => total + item.quantity, 0) : 0;
+                    cartCount.textContent = totalItems;
+                } else {
+                    cartCount.textContent = '0';
+                }
+            }
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('token');
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('cart');
+            localStorage.removeItem('wishlist');
+            alert('Logged out successfully!');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,668 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - Aestheticize</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <link rel="stylesheet" href="./css/style.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!--header -->
+    <section>
+        <nav class="navbar navbar-expand-lg navbar-light bg-light py-3" aria-label="Eleventh navbar example">
+            <div class="container">
+                <a href="index.html"><img class="logo-mode ml-5" src="./images/logofinal.jpeg"></a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarsExample09" aria-controls="navbarsExample09" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                
+                <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">About Us</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Help/FAQ</a>
+                        </li>
+                        <li class="nav-item nav-icon" id="cartIcon">
+                            <button class="btn position-relative" onclick="window.location.href='cart.html'">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-bag" viewBox="0 0 16 16">
+                                    <path d="M8 1a2.5 2.5 0 0 1 2.5 2.5V4h-5v-.5A2.5 2.5 0 0 1 8 1m3.5 3v-.5a3.5 3.5 0 1 0-7 0V4H1v10a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V4zM2 5h12v9a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1z"/>
+                                </svg>
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="cartCount">0</span>
+                            </button>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <button class="btn dropdown-toggle nav-icon" type="button" id="userDropdownButton" data-bs-toggle="dropdown" aria-expanded="false">
+                                <i class="fas fa-user"></i>
+                            </button>
+                            <ul class="dropdown-menu" id="userDropdown">
+                                <!-- Dropdown items will be populated by JavaScript -->
+                            </ul>
+                        </li>
+                        <li class="nav-item nav-icon">
+                            <a href="wishlist.html" class="btn">
+                                <i class="fas fa-heart text-danger"></i>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+    </section>
+
+    <!-- Profile Content -->
+    <div class="container mt-5 pt-3">
+        <div class="row">
+            <!-- Profile Sidebar -->
+            <div class="col-lg-3">
+                <div class="card shadow-sm mb-4">
+                    <div class="card-body text-center">
+                        <div class="profile-avatar mb-3">
+                            <img src="https://via.placeholder.com/120" alt="Profile" class="rounded-circle img-fluid" id="profileImage">
+                            <button class="btn btn-sm btn-primary mt-2" onclick="changeProfileImage()">
+                                <i class="fas fa-camera me-1"></i>Change Photo
+                            </button>
+                        </div>
+                        <h5 id="profileName">Fashion Enthusiast</h5>
+                        <p class="text-muted" id="profileEmail">user@example.com</p>
+                        <div class="d-flex justify-content-center">
+                            <div class="me-3">
+                                <strong id="totalOrders">12</strong>
+                                <small class="d-block text-muted">Orders</small>
+                            </div>
+                            <div>
+                                <strong id="sustainabilityPoints" class="text-success">245</strong>
+                                <small class="d-block text-muted">Eco Points</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navigation Menu -->
+                <div class="list-group">
+                    <button class="list-group-item list-group-item-action active" onclick="showSection('personal-info')">
+                        <i class="fas fa-user me-2"></i>Personal Information
+                    </button>
+                    <button class="list-group-item list-group-item-action" onclick="showSection('orders')">
+                        <i class="fas fa-box me-2"></i>Order History
+                    </button>
+                    <button class="list-group-item list-group-item-action" onclick="showSection('addresses')">
+                        <i class="fas fa-map-marker-alt me-2"></i>Addresses
+                    </button>
+                    <button class="list-group-item list-group-item-action" onclick="showSection('sustainability')">
+                        <i class="fas fa-leaf me-2"></i>Sustainability Dashboard
+                    </button>
+                    <button class="list-group-item list-group-item-action" onclick="showSection('preferences')">
+                        <i class="fas fa-palette me-2"></i>Style Preferences
+                    </button>
+                    <button class="list-group-item list-group-item-action" onclick="showSection('settings')">
+                        <i class="fas fa-cog me-2"></i>Account Settings
+                    </button>
+                </div>
+            </div>
+
+            <!-- Main Content -->
+            <div class="col-lg-9">
+                <!-- Personal Information Section -->
+                <div id="personal-info" class="profile-section">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">
+                                <i class="fas fa-user me-2"></i>Personal Information
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="personalInfoForm">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">First Name</label>
+                                        <input type="text" class="form-control" id="firstName" value="Akshara">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Last Name</label>
+                                        <input type="text" class="form-control" id="lastName" value="Manocha">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="email" class="form-control" id="email" value="akshara@example.com">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Phone</label>
+                                        <input type="tel" class="form-control" id="phone" value="+91 9876543210">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Date of Birth</label>
+                                        <input type="date" class="form-control" id="dob" value="1995-06-15">
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Gender</label>
+                                        <select class="form-select" id="gender">
+                                            <option value="female" selected>Female</option>
+                                            <option value="male">Male</option>
+                                            <option value="other">Other</option>
+                                            <option value="prefer-not-to-say">Prefer not to say</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="button" class="btn btn-primary" onclick="savePersonalInfo()">
+                                    <i class="fas fa-save me-1"></i>Save Changes
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders Section -->
+                <div id="orders" class="profile-section" style="display: none;">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">
+                                <i class="fas fa-box me-2"></i>Order History
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" id="ordersList">
+                                <!-- Sample orders -->
+                                <div class="col-12 mb-3">
+                                    <div class="border rounded p-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">Order #AES001</h6>
+                                                <small class="text-muted">Placed on: Dec 15, 2024</small>
+                                            </div>
+                                            <div class="text-end">
+                                                <span class="badge bg-success">Delivered</span>
+                                                <div class="text-primary fw-bold">₹2,450</div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <small class="text-muted">3 items • Earned 24 sustainability points</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12 mb-3">
+                                    <div class="border rounded p-3">
+                                        <div class="d-flex justify-content-between align-items-center">
+                                            <div>
+                                                <h6 class="mb-1">Order #AES002</h6>
+                                                <small class="text-muted">Placed on: Dec 8, 2024</small>
+                                            </div>
+                                            <div class="text-end">
+                                                <span class="badge bg-warning">In Transit</span>
+                                                <div class="text-primary fw-bold">₹1,890</div>
+                                            </div>
+                                        </div>
+                                        <div class="mt-2">
+                                            <small class="text-muted">2 items • Will earn 19 sustainability points</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Addresses Section -->
+                <div id="addresses" class="profile-section" style="display: none;">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-light d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0">
+                                <i class="fas fa-map-marker-alt me-2"></i>Saved Addresses
+                            </h5>
+                            <button class="btn btn-primary btn-sm" onclick="addNewAddress()">
+                                <i class="fas fa-plus me-1"></i>Add Address
+                            </button>
+                        </div>
+                        <div class="card-body">
+                            <div class="row" id="addressesList">
+                                <!-- Sample addresses -->
+                                <div class="col-md-6 mb-3">
+                                    <div class="border rounded p-3">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="badge bg-primary mb-2">Home</span>
+                                            <button class="btn btn-sm btn-outline-secondary">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </div>
+                                        <address class="mb-0">
+                                            <strong>Akshara Manocha</strong><br>
+                                            123 Fashion Street<br>
+                                            Delhi, 110001<br>
+                                            India<br>
+                                            Phone: +91 9876543210
+                                        </address>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <div class="border rounded p-3">
+                                        <div class="d-flex justify-content-between">
+                                            <span class="badge bg-secondary mb-2">Work</span>
+                                            <button class="btn btn-sm btn-outline-secondary">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                        </div>
+                                        <address class="mb-0">
+                                            <strong>Akshara Manocha</strong><br>
+                                            456 Corporate Plaza<br>
+                                            Gurgaon, 122001<br>
+                                            India<br>
+                                            Phone: +91 9876543210
+                                        </address>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Sustainability Section -->
+                <div id="sustainability" class="profile-section" style="display: none;">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">
+                                <i class="fas fa-leaf me-2 text-success"></i>Sustainability Dashboard
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row text-center mb-4">
+                                <div class="col-md-3">
+                                    <div class="card bg-success text-white">
+                                        <div class="card-body">
+                                            <h3>245</h3>
+                                            <small>Total Eco Points</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card bg-info text-white">
+                                        <div class="card-body">
+                                            <h3>12</h3>
+                                            <small>Sustainable Purchases</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card bg-warning text-white">
+                                        <div class="card-body">
+                                            <h3>3.2kg</h3>
+                                            <small>CO₂ Saved</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3">
+                                    <div class="card bg-primary text-white">
+                                        <div class="card-body">
+                                            <h3>Gold</h3>
+                                            <small>Eco Level</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <h6>Recent Eco Activities</h6>
+                            <div class="timeline">
+                                <div class="d-flex mb-3">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-leaf text-success"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <small class="text-muted">2 days ago</small>
+                                        <p class="mb-1">Earned 15 points for buying vintage denim jacket</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-recycle text-info"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <small class="text-muted">1 week ago</small>
+                                        <p class="mb-1">Saved 0.5kg CO₂ with sustainable fashion choices</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <div class="flex-shrink-0">
+                                        <i class="fas fa-award text-warning"></i>
+                                    </div>
+                                    <div class="flex-grow-1 ms-3">
+                                        <small class="text-muted">2 weeks ago</small>
+                                        <p class="mb-1">Achieved Gold eco level status!</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Style Preferences Section -->
+                <div id="preferences" class="profile-section" style="display: none;">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">
+                                <i class="fas fa-palette me-2"></i>Style Preferences
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <form>
+                                <div class="mb-4">
+                                    <label class="form-label">Favorite Aesthetics</label>
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="vintage" checked>
+                                                <label class="form-check-label" for="vintage">Vintage</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="boho" checked>
+                                                <label class="form-check-label" for="boho">Boho</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="minimalist">
+                                                <label class="form-check-label" for="minimalist">Minimalist</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="cottagecore">
+                                                <label class="form-check-label" for="cottagecore">Cottagecore</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="y2k" checked>
+                                                <label class="form-check-label" for="y2k">Y2K</label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="grunge">
+                                                <label class="form-check-label" for="grunge">Grunge</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Size Preferences</label>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <select class="form-select">
+                                                <option>Clothing Size</option>
+                                                <option selected>Medium</option>
+                                                <option>Large</option>
+                                                <option>Small</option>
+                                            </select>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <select class="form-select">
+                                                <option>Shoe Size</option>
+                                                <option selected>7</option>
+                                                <option>8</option>
+                                                <option>9</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3">
+                                    <label class="form-label">Budget Range</label>
+                                    <select class="form-select">
+                                        <option>Under ₹500</option>
+                                        <option selected>₹500 - ₹1500</option>
+                                        <option>₹1500 - ₹3000</option>
+                                        <option>Above ₹3000</option>
+                                    </select>
+                                </div>
+
+                                <button type="button" class="btn btn-primary">
+                                    <i class="fas fa-save me-1"></i>Save Preferences
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Section -->
+                <div id="settings" class="profile-section" style="display: none;">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-light">
+                            <h5 class="mb-0">
+                                <i class="fas fa-cog me-2"></i>Account Settings
+                            </h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="mb-4">
+                                <h6>Privacy Settings</h6>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="emailNotifications" checked>
+                                    <label class="form-check-label" for="emailNotifications">
+                                        Email Notifications
+                                    </label>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="profilePublic">
+                                    <label class="form-check-label" for="profilePublic">
+                                        Public Profile
+                                    </label>
+                                </div>
+                                <div class="form-check form-switch">
+                                    <input class="form-check-input" type="checkbox" id="sustainabilityTips" checked>
+                                    <label class="form-check-label" for="sustainabilityTips">
+                                        Sustainability Tips
+                                    </label>
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <h6>Security</h6>
+                                <button class="btn btn-outline-primary me-2">
+                                    <i class="fas fa-key me-1"></i>Change Password
+                                </button>
+                                <button class="btn btn-outline-info">
+                                    <i class="fas fa-shield-alt me-1"></i>Two-Factor Authentication
+                                </button>
+                            </div>
+
+                            <div class="mb-4">
+                                <h6>Data Management</h6>
+                                <button class="btn btn-outline-success me-2">
+                                    <i class="fas fa-download me-1"></i>Download My Data
+                                </button>
+                                <button class="btn btn-outline-danger">
+                                    <i class="fas fa-trash me-1"></i>Delete Account
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/cart.js"></script>
+    <script src="js/cart-integration.js"></script>
+    <script src="js/main.js"></script>
+    
+    <script>
+        // Profile page functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Profile page loaded');
+            updateUserInterface();
+            loadProfileData();
+        });
+
+        // Show different profile sections
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.profile-section').forEach(section => {
+                section.style.display = 'none';
+            });
+            
+            // Remove active class from all menu items
+            document.querySelectorAll('.list-group-item').forEach(item => {
+                item.classList.remove('active');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).style.display = 'block';
+            
+            // Add active class to clicked menu item
+            event.target.classList.add('active');
+        }
+
+        // Load profile data from localStorage or defaults
+        function loadProfileData() {
+            // Load sustainability points from localStorage
+            const savedCart = localStorage.getItem('cart');
+            const savedWishlist = localStorage.getItem('wishlist');
+            
+            let totalSpent = 0;
+            let sustainabilityPoints = 0;
+            
+            if (savedCart) {
+                const cart = JSON.parse(savedCart);
+                if (cart.items) {
+                    cart.items.forEach(item => {
+                        totalSpent += (item.price * item.quantity);
+                        sustainabilityPoints += (item.sustainability || 0) * item.quantity;
+                    });
+                }
+            }
+            
+            // Update sustainability points display
+            document.getElementById('sustainabilityPoints').textContent = sustainabilityPoints;
+            
+            // Update profile stats
+            updateProfileStats();
+        }
+
+        // Update profile statistics
+        function updateProfileStats() {
+            // These would typically come from a backend
+            const stats = {
+                totalOrders: Math.floor(Math.random() * 20) + 5,
+                sustainabilityPoints: Math.floor(Math.random() * 500) + 100
+            };
+            
+            document.getElementById('totalOrders').textContent = stats.totalOrders;
+            document.getElementById('sustainabilityPoints').textContent = stats.sustainabilityPoints;
+        }
+
+        // Save personal information
+        function savePersonalInfo() {
+            const firstName = document.getElementById('firstName').value;
+            const lastName = document.getElementById('lastName').value;
+            const email = document.getElementById('email').value;
+            
+            // Update profile display
+            document.getElementById('profileName').textContent = `${firstName} ${lastName}`;
+            document.getElementById('profileEmail').textContent = email;
+            
+            // Show success message
+            showNotification('Profile information saved successfully!', 'success');
+        }
+
+        // Change profile image
+        function changeProfileImage() {
+            // In a real app, this would open a file picker
+            const images = [
+                'https://via.placeholder.com/120/FF6B6B/FFFFFF?text=A',
+                'https://via.placeholder.com/120/4ECDC4/FFFFFF?text=A',
+                'https://via.placeholder.com/120/45B7D1/FFFFFF?text=A',
+                'https://via.placeholder.com/120/96CEB4/FFFFFF?text=A',
+                'https://via.placeholder.com/120/FECA57/FFFFFF?text=A'
+            ];
+            
+            const randomImage = images[Math.floor(Math.random() * images.length)];
+            document.getElementById('profileImage').src = randomImage;
+            
+            showNotification('Profile picture updated!', 'success');
+        }
+
+        // Add new address
+        function addNewAddress() {
+            showNotification('Add address functionality would open a modal here', 'info');
+        }
+
+        // Show notification function
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type === 'error' ? 'danger' : type === 'success' ? 'success' : 'info'} alert-dismissible fade show position-fixed`;
+            notification.style.cssText = 'top: 20px; right: 20px; z-index: 9999; min-width: 300px;';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 3 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 3000);
+        }
+
+        // Initialize user interface
+        function updateUserInterface() {
+            const userDropdown = document.getElementById('userDropdown');
+            
+            if (userDropdown) {
+                const dropdownHTML = `
+                    <li><a class="dropdown-item" href="profile.html"><i class="fas fa-user me-2"></i>Profile</a></li>
+                    <li><a class="dropdown-item" href="orders.html"><i class="fas fa-box me-2"></i>Orders</a></li>
+                    <li><a class="dropdown-item" href="wishlist.html"><i class="fas fa-heart me-2"></i>Wishlist</a></li>
+                    <li><hr class="dropdown-divider"></li>
+                    <li><a class="dropdown-item" href="#" onclick="logout()"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+                `;
+                userDropdown.innerHTML = dropdownHTML;
+            }
+            
+            // Update cart count
+            const cartCount = document.getElementById('cartCount');
+            if (cartCount) {
+                const savedCart = localStorage.getItem('cart');
+                if (savedCart) {
+                    const cart = JSON.parse(savedCart);
+                    const totalItems = cart.items ? cart.items.reduce((total, item) => total + item.quantity, 0) : 0;
+                    cartCount.textContent = totalItems;
+                } else {
+                    cartCount.textContent = '0';
+                }
+            }
+        }
+
+        // Logout function
+        function logout() {
+            localStorage.removeItem('authToken');
+            localStorage.removeItem('user');
+            localStorage.removeItem('token');
+            localStorage.removeItem('isLoggedIn');
+            localStorage.removeItem('cart');
+            localStorage.removeItem('wishlist');
+            showNotification('Logged out successfully!', 'success');
+            setTimeout(() => {
+                window.location.href = 'login.html';
+            }, 1000);
+        }
+    </script>
+</body>
+</html>
